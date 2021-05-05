@@ -15,6 +15,7 @@ public class StudentOrderServiceTest {
 
     @Test
     public void testService() {
-        service.daoTest();
+        service.testSave();
+        service.testGet();
     }
 }

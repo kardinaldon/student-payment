@@ -12,4 +12,5 @@ public class Person {
     private String givenName;
     private String patronymic;
     private LocalDate dateOfBirth;
+    private Address address;
 }

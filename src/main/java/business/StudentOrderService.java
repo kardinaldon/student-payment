@@ -1,6 +1,7 @@
 package business;
 
 import dao.StudentOrderRepository;
+import domain.Address;
 import domain.Person;
 import domain.StudentOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,12 @@ public class StudentOrderService {
     private Person buildPerson (boolean wife) {
         Person person = new Person();
         person.setDateOfBirth(LocalDate.now());
+        Address address = new Address();
+        address.setApartment("342");
+        address.setBuilding("45");
+        address.setExtension("G");
+        address.setPostCode("1232312");
+        person.setAddress(address);
         if(wife){
             person.setGivenName("Petrova");
             person.setSurName("Irina");

@@ -20,6 +20,10 @@ public class StudentOrder {
             @AttributeOverride(name = "givenName", column = @Column(name = "h_given_name")),
             @AttributeOverride(name = "patronymic", column = @Column(name = "h_patronymic")),
             @AttributeOverride(name = "dateOfBirth", column = @Column(name = "h_date_of_birth")),
+            @AttributeOverride(name = "address.postCode", column = @Column(name = "h_post_index")),
+            @AttributeOverride(name = "address.building", column = @Column(name = "h_building")),
+            @AttributeOverride(name = "address.extension", column = @Column(name = "h_extension")),
+            @AttributeOverride(name = "address.apartment", column = @Column(name = "h_apartment"))
     })
     private Person husband;
 
@@ -28,6 +32,10 @@ public class StudentOrder {
             @AttributeOverride(name = "givenName", column = @Column(name = "w_given_name")),
             @AttributeOverride(name = "patronymic", column = @Column(name = "w_patronymic")),
             @AttributeOverride(name = "dateOfBirth", column = @Column(name = "w_date_of_birth")),
+            @AttributeOverride(name = "address.postCode", column = @Column(name = "w_post_index")),
+            @AttributeOverride(name = "address.building", column = @Column(name = "w_building")),
+            @AttributeOverride(name = "address.extension", column = @Column(name = "w_extension")),
+            @AttributeOverride(name = "address.apartment", column = @Column(name = "w_apartment"))
     })
     private Person wife;
 

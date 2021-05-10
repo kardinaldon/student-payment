@@ -1,8 +1,10 @@
 package business;
 
+import dao.StreetRepository;
 import dao.StudentOrderRepository;
 import domain.Address;
 import domain.Person;
+import domain.Street;
 import domain.StudentOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,9 @@ public class StudentOrderService {
 
     @Autowired
     private StudentOrderRepository studentOrderRepository;
+
+    @Autowired
+    private StreetRepository streetRepository;
 
     @Transactional
     public void testSave () {
@@ -44,6 +49,8 @@ public class StudentOrderService {
         address.setExtension("G");
         address.setPostCode("1232312");
         person.setAddress(address);
+        Street street = streetRepository.getOne(1L);
+        address.setStreet(street);
         if(wife){
             person.setGivenName("Petrova");
             person.setSurName("Irina");

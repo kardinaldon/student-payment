@@ -15,6 +15,10 @@ public class StudentOrder {
     @Column(name = "student_order_id")
     private Long studentOrderId;
 
+    @AssociationOverrides({
+            @AssociationOverride(name = "address.street", joinColumns = @JoinColumn(name = "h_street_code"))
+    })
+
     @AttributeOverrides({
             @AttributeOverride(name = "surName", column = @Column(name = "h_sur_name")),
             @AttributeOverride(name = "givenName", column = @Column(name = "h_given_name")),
@@ -26,6 +30,10 @@ public class StudentOrder {
             @AttributeOverride(name = "address.apartment", column = @Column(name = "h_apartment"))
     })
     private Person husband;
+
+    @AssociationOverrides({
+            @AssociationOverride(name = "address.street", joinColumns = @JoinColumn(name = "w_street_code"))
+    })
 
     @AttributeOverrides({
             @AttributeOverride(name = "surName", column = @Column(name = "w_sur_name")),

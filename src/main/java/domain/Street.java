@@ -1,7 +1,6 @@
 package domain;
 
 import lombok.Data;
-import org.hibernate.annotations.GeneratorType;
 
 import javax.persistence.*;
 
@@ -12,7 +11,6 @@ public class Street {
 
     @Id
     @Column(name = "street_code")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long streetCode;
 
     @Column(name = "street_name")

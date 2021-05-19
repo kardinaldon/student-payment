@@ -3,9 +3,10 @@ package domain;
 import lombok.Data;
 
 import javax.persistence.Embeddable;
+import javax.persistence.MappedSuperclass;
 import java.time.LocalDate;
 
-@Embeddable
+@MappedSuperclass
 @Data
 public class Person {
     private String surName;

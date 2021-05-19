@@ -2,10 +2,7 @@ package business;
 
 import dao.StreetRepository;
 import dao.StudentOrderRepository;
-import domain.Address;
-import domain.Person;
-import domain.Street;
-import domain.StudentOrder;
+import domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,30 +34,39 @@ public class StudentOrderService {
     @Transactional
     public void testGet () {
         List<StudentOrder> studentOrderRepositoryAll = studentOrderRepository.findAll();
-        LOG.info(studentOrderRepositoryAll.get(0).getWife().getGivenName());
+        for(StudentOrder studentOrder : studentOrderRepositoryAll) {
+            LOG.info(studentOrder.toString());
+        }
+
     }
 
-    private Person buildPerson (boolean wife) {
-        Person person = new Person();
-        person.setDateOfBirth(LocalDate.now());
+    private Adult buildPerson (boolean wife) {
+        Adult adult = new Adult();
+        adult.setDateOfBirth(LocalDate.now());
         Address address = new Address();
         address.setApartment("342");
         address.setBuilding("45");
         address.setExtension("G");
         address.setPostCode("1232312");
-        person.setAddress(address);
+        adult.setAddress(address);
         Street street = streetRepository.getOne(1L);
         address.setStreet(street);
         if(wife){
-            person.setGivenName("Petrova");
-            person.setSurName("Irina");
-            person.setPatronymic("Ivanovna");
+            adult.setGivenName("Petrova");
+            adult.setSurName("Irina");
+            adult.setPatronymic("Ivanovna");
+            adult.setPassportNumber("W_PASS_N");
+            adult.setPassportSeria("W_PASS_S");
+            adult.setIssueDate(LocalDate.of(1987,02,05));
         }
         else {
-            person.setGivenName("Ivanov");
-            person.setSurName("Sergey");
-            person.setPatronymic("Ivanovich");
+            adult.setGivenName("Ivanov");
+            adult.setSurName("Sergey");
+            adult.setPatronymic("Ivanovich");
+            adult.setPassportNumber("H_PASS_N");
+            adult.setPassportSeria("H_PASS_S");
+            adult.setIssueDate(LocalDate.of(1985,05,20));
         }
-        return person;
+        return adult;
     }
 }

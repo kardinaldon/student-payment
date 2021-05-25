@@ -3,10 +3,11 @@ package domain;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "jc_student_order_tmp")
+@Table(name = "jc_student_order")
 @Data
 public class StudentOrder {
 
@@ -15,10 +16,18 @@ public class StudentOrder {
     @Column(name = "student_order_id")
     private Long studentOrderId;
 
-    @AssociationOverrides({
-            @AssociationOverride(name = "address.street", joinColumns = @JoinColumn(name = "h_street_code"))
-    })
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @JoinColumn(name = "student_order_status_id")
+    private StudentOrderStatus studentOrderStatus;
 
+    @Column(name = "student_order_date")
+    private LocalDateTime studentOrderDate;
+
+    @AssociationOverrides({
+            @AssociationOverride(name = "address.street", joinColumns = @JoinColumn(name = "h_street_code")),
+            @AssociationOverride(name = "passportOffice", joinColumns = @JoinColumn(name = "h_passport_office_id")),
+            @AssociationOverride(name = "university", joinColumns = @JoinColumn(name = "h_university_id"))
+    })
     @AttributeOverrides({
             @AttributeOverride(name = "surName", column = @Column(name = "h_sur_name")),
             @AttributeOverride(name = "givenName", column = @Column(name = "h_given_name")),
@@ -30,15 +39,17 @@ public class StudentOrder {
             @AttributeOverride(name = "address.apartment", column = @Column(name = "h_apartment")),
             @AttributeOverride(name = "passportSeria", column = @Column(name = "h_passport_seria")),
             @AttributeOverride(name = "passportNumber", column = @Column(name = "h_passport_number")),
-            @AttributeOverride(name = "issueDate", column = @Column(name = "h_passport_date"))
+            @AttributeOverride(name = "issueDate", column = @Column(name = "h_passport_date")),
+            @AttributeOverride(name = "studentNumber", column = @Column(name = "h_student_number"))
     })
     @Embedded
     private Adult husband;
 
     @AssociationOverrides({
-            @AssociationOverride(name = "address.street", joinColumns = @JoinColumn(name = "w_street_code"))
+            @AssociationOverride(name = "address.street", joinColumns = @JoinColumn(name = "w_street_code")),
+            @AssociationOverride(name = "passportOffice", joinColumns = @JoinColumn(name = "w_passport_office_id")),
+            @AssociationOverride(name = "university", joinColumns = @JoinColumn(name = "w_university_id"))
     })
-
     @AttributeOverrides({
             @AttributeOverride(name = "surName", column = @Column(name = "w_sur_name")),
             @AttributeOverride(name = "givenName", column = @Column(name = "w_given_name")),
@@ -50,9 +61,19 @@ public class StudentOrder {
             @AttributeOverride(name = "address.apartment", column = @Column(name = "w_apartment")),
             @AttributeOverride(name = "passportSeria", column = @Column(name = "w_passport_seria")),
             @AttributeOverride(name = "passportNumber", column = @Column(name = "w_passport_number")),
-            @AttributeOverride(name = "issueDate", column = @Column(name = "w_passport_date"))
+            @AttributeOverride(name = "issueDate", column = @Column(name = "w_passport_date")),
+            @AttributeOverride(name = "studentNumber", column = @Column(name = "w_student_number"))
     })
     @Embedded
     private Adult wife;
 
+    @Column(name = "certificate_number")
+    private String certificateNumber;
+
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @JoinColumn(name = "register_office_id")
+    private RegisterOffice registerOffice;
+
+    @Column(name = "marriage_date")
+    private LocalDate marriageDate;
 }

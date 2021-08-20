@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "jc_student_order")
@@ -76,4 +77,9 @@ public class StudentOrder {
 
     @Column(name = "marriage_date")
     private LocalDate marriageDate;
+
+    @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.REMOVE}
+    , fetch = FetchType.LAZY
+            , mappedBy = "studentOrder")
+    List<StudentOrderChild> children;
 }

@@ -35,6 +35,9 @@ public class StudentOrderService {
     @Autowired
     private UniversityRepository universityRepository;
 
+    @Autowired
+    private StudentOrderChildRepository studentOrderChildRepository;
+
     @Transactional
     public void testSave () {
         StudentOrder studentOrder = new StudentOrder();
@@ -46,14 +49,16 @@ public class StudentOrderService {
         studentOrder.setRegisterOffice(registerOfficeRepository.getOne(1L));
         studentOrder.setMarriageDate(LocalDate.of(2019,05,15));
         studentOrderRepository.save(studentOrder);
+
+        StudentOrderChild studentOrderChild = buildChild(studentOrder);
+        studentOrderChildRepository.save(studentOrderChild);
     }
 
     @Transactional
     public void testGet () {
         List<StudentOrder> studentOrderRepositoryAll = studentOrderRepository.findAll();
-        for(StudentOrder studentOrder : studentOrderRepositoryAll) {
-            LOG.info(studentOrder.toString());
-        }
+        LOG.info(studentOrderRepositoryAll.get(0).getWife().getGivenName());
+        LOG.info(studentOrderRepositoryAll.get(0).getChildren().get(0).getChild().getGivenName());
 
     }
 
@@ -91,5 +96,30 @@ public class StudentOrderService {
             adult.setUniversity(universityRepository.getOne(1L));
         }
         return adult;
+    }
+
+    private StudentOrderChild buildChild (StudentOrder studentOrder) {
+        StudentOrderChild studentOrderChild = new StudentOrderChild();
+        studentOrderChild.setStudentOrder(studentOrder);
+
+        Child child = new Child();
+        child.setDateOfBirth(LocalDate.now());
+        child.setGivenName("Ivanov");
+        child.setSurName("Egor");
+        child.setPatronymic("Sergeevich");
+        child.setCertificateDate(LocalDate.now());
+        child.setCertificateNumber("BIRTH_N");
+        child.setRegisterOffice(registerOfficeRepository.getOne(1L));
+
+        Address address = new Address();
+        address.setApartment("342");
+        address.setBuilding("45");
+        address.setExtension("G");
+        address.setPostCode("1232312");
+        Street street = streetRepository.getOne(1L);
+        address.setStreet(street);
+        child.setAddress(address);
+        studentOrderChild.setChild(child);
+        return studentOrderChild;
     }
 }
